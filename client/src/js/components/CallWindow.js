@@ -6,17 +6,20 @@ import { faPhone, faVideo } from '@fortawesome/free-solid-svg-icons';
 import ActionButton from './ActionButton';
 
 function CallWindow({ peerSrc, localSrc, config, mediaDevice, status, endCall }) {
+  console.log('CallWindow-> start');
   const peerVideo = useRef(null);
   const localVideo = useRef(null);
   const [video, setVideo] = useState(config.video);
   const [audio, setAudio] = useState(config.audio);
 
   useEffect(() => {
+    console.log('CallWindow.useEffect1-> start');
     if (peerVideo.current && peerSrc) peerVideo.current.srcObject = peerSrc;
     if (localVideo.current && localSrc) localVideo.current.srcObject = localSrc;
   });
 
   useEffect(() => {
+    console.log('CallWindow.useEffect2-> start');
     if (mediaDevice) {
       mediaDevice.toggle('Video', video);
       mediaDevice.toggle('Audio', audio);
@@ -28,6 +31,7 @@ function CallWindow({ peerSrc, localSrc, config, mediaDevice, status, endCall })
    * @param {'Audio' | 'Video'} deviceType - Type of the device eg: Video, Audio
    */
   const toggleMediaDevice = (deviceType) => {
+    console.log('CallWindow.toggleMediaDevice-> start');
     if (deviceType === 'Video') {
       setVideo(!video);
     }

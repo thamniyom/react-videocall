@@ -8,6 +8,7 @@ import CallModal from './components/CallModal';
 class App extends Component {
   constructor() {
     super();
+    console.log('app.constructor-> start');
     this.state = {
       callWindow: '',
       callModal: '',
@@ -23,11 +24,14 @@ class App extends Component {
   }
 
   componentDidMount() {
+    console.log('app.componentDidMount-> start');
     socket
       .on('request', ({ from: callFrom }) => {
+        console.log('app.request-> start');
         this.setState({ callModal: 'active', callFrom });
       })
       .on('call', (data) => {
+        console.log('app.call-> start');
         if (data.sdp) {
           this.pc.setRemoteDescription(data.sdp);
           if (data.sdp.type === 'offer') this.pc.createAnswer();
@@ -38,6 +42,7 @@ class App extends Component {
   }
 
   startCall(isCaller, friendID, config) {
+    console.log('app.startCall-> start');
     this.config = config;
     this.pc = new PeerConnection(friendID)
       .on('localStream', (src) => {
@@ -50,12 +55,14 @@ class App extends Component {
   }
 
   rejectCall() {
+    console.log('app.rejectCall-> start');
     const { callFrom } = this.state;
     socket.emit('end', { to: callFrom });
     this.setState({ callModal: '' });
   }
 
   endCall(isStarter) {
+    console.log('app.endCall-> start');
     if (_.isFunction(this.pc.stop)) {
       this.pc.stop(isStarter);
     }
@@ -70,6 +77,7 @@ class App extends Component {
   }
 
   render() {
+    console.log('app.render-> start');
     const { callFrom, callModal, callWindow, localSrc, peerSrc } = this.state;
     return (
       <div>

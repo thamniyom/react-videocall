@@ -5,9 +5,11 @@ import ActionButton from './ActionButton';
 import { socket } from '../communication';
 
 function useClientID() {
+  console.log('MainWindow.useClientID-> start');
   const [clientID, setClientID] = useState('');
 
   useEffect(() => {
+    console.log('MainWindow.useEffect-> start');
     socket
       .on('init', ({ id }) => {
         document.title = `${id} - VideoCall`;
@@ -19,6 +21,7 @@ function useClientID() {
 }
 
 function MainWindow({ startCall }) {
+  console.log('MainWindow-> start');
   const clientID = useClientID();
   const [friendID, setFriendID] = useState(null);
 
@@ -27,6 +30,7 @@ function MainWindow({ startCall }) {
    * @param {Boolean} video
    */
   const callWithVideo = (video) => {
+    console.log('MainWindow.callWithVideo-> start');
     const config = { audio: true, video };
     return () => friendID && startCall(true, friendID, config);
   };

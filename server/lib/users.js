@@ -8,16 +8,20 @@ const users = {};
 
 // Random ID until the ID is not in used or max tries is reached
 async function randomID(counter = 0) {
+  console.log('users.randomID-> start');
   if (counter > MAX_TRIES) {
     return null;
   }
   await setTimeout(10);
   const id = haiku();
+  console.log('socket.randomID-> id=',id);
   return id in users ? randomID(counter + 1) : id;
 }
 
 exports.create = async (socket) => {
+  console.log('users.create-> start');
   const id = await randomID();
+  console.log('socket.create-> id=',id);
   if (id) {
     users[id] = socket;
   }

@@ -10,6 +10,7 @@ class PeerConnection extends Emitter {
      * @param {String} friendID - ID of the friend you want to call.
      */
   constructor(friendID) {
+    console.log('PeerConnection.constructor-> start');
     super();
     this.pc = new RTCPeerConnection(PC_CONFIG);
     this.pc.onicecandidate = (event) => socket.emit('call', {
@@ -27,6 +28,7 @@ class PeerConnection extends Emitter {
    * @param {Boolean} isCaller
    */
   start(isCaller) {
+    console.log('PeerConnection.start-> start');
     this.mediaDevice
       .on('stream', (stream) => {
         stream.getTracks().forEach((track) => {
@@ -46,6 +48,7 @@ class PeerConnection extends Emitter {
    * @param {Boolean} isStarter
    */
   stop(isStarter) {
+    console.log('PeerConnection.stop-> start');
     if (isStarter) {
       socket.emit('end', { to: this.friendID });
     }
@@ -57,6 +60,7 @@ class PeerConnection extends Emitter {
   }
 
   createOffer() {
+    console.log('PeerConnection.createOffer-> start');
     this.pc.createOffer()
       .then(this.getDescription.bind(this))
       .catch((err) => console.log(err));
@@ -64,6 +68,7 @@ class PeerConnection extends Emitter {
   }
 
   createAnswer() {
+    console.log('PeerConnection.createAnswer-> start');
     this.pc.createAnswer()
       .then(this.getDescription.bind(this))
       .catch((err) => console.log(err));
@@ -74,6 +79,7 @@ class PeerConnection extends Emitter {
    * @param {RTCLocalSessionDescriptionInit} desc - Session description
    */
   getDescription(desc) {
+    console.log('PeerConnection.getDescription-> start');
     this.pc.setLocalDescription(desc);
     socket.emit('call', { to: this.friendID, sdp: desc });
     return this;
@@ -83,6 +89,7 @@ class PeerConnection extends Emitter {
    * @param {RTCSessionDescriptionInit} sdp - Session description
    */
   setRemoteDescription(sdp) {
+    console.log('PeerConnection.setRemoteDescription-> start');
     const rtcSdp = new RTCSessionDescription(sdp);
     this.pc.setRemoteDescription(rtcSdp);
     return this;

@@ -5,7 +5,9 @@ import { faPhone, faVideo } from '@fortawesome/free-solid-svg-icons';
 import ActionButton from './ActionButton';
 
 function CallModal({ status, callFrom, startCall, rejectCall }) {
+  console.log('CallModal-> start');
   const acceptWithVideo = (video) => {
+    console.log('CallModal.acceptWithVideo-> start');
     const config = { audio: true, video };
     return () => startCall(false, callFrom, config);
   };
